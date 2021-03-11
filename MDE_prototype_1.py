@@ -8,7 +8,7 @@
 #     1. Calculate link VMT by functional class
 #     2. Calculate trip length distribution by mode
 #
-# Author: Ben Krepp
+# Authors: Ben Krepp and Margaret Atkinson
 
 import openmatrix as omx
 import numpy as np

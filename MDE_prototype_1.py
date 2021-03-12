@@ -8,7 +8,7 @@
 #     1. Calculate link VMT by functional class
 #     2. Calculate trip length distribution by mode
 #
-# Authors: Ben Krepp and Margaret Atkinson
+# Author: Ben Krepp and Margaret Atkinson
 
 import openmatrix as omx
 import numpy as np
@@ -71,5 +71,28 @@ plt.figure(figsize=(9,3))
 plt.title('A.M. Trip Length Distribution by Mode')
 plt.xlabel('Mode')
 plt.ylabel('Trip Length')
+plt.bar(names, values)
+plt.show()
+
+# (3) Get link VMT by functional class of road
+flow_fn = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/AM_MMA_LinkFlow.csv'
+links_fn = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/statewide_links.csv'
+
+df_flow = pd.read_csv(flow_fn, usecols=['ID1', 'Tot_Flow'], dtype={'ID1':np.int32, 'Tot_Flow':np.float64})
+df_links = pd.read_csv(links_fn, usecols=['ID', 'SCEN_00_FU'])
+
+# Join links data to flow data on 'ID'/'ID1' fields:
+joined_data = df_links.set_index('ID').join(df_flow.set_index('ID1'))
+
+# Get sum of total flow, aggregated by functional class
+total_flow_by_fc = joined_data.groupby('SCEN_00_FU')['Tot_Flow'].sum()
+
+# The following statement gets the (somewhat funky) list of the functional classes found in the data:
+names = df_links.groupby(['SCEN_00_FU']).groups.keys()
+values = total_flow_by_fc
+plt.figure(figsize=(9,3))
+plt.title('Link VMT by Functional Class')
+plt.xlabel('Functional Class')
+plt.ylabel('Link VMT')
 plt.bar(names, values)
 plt.show()

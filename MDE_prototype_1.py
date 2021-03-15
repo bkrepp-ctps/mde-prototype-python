@@ -96,3 +96,12 @@ plt.xlabel('Functional Class')
 plt.ylabel('Link VMT')
 plt.bar(names, values)
 plt.show()
+
+# (DIGRESSION) Export data from table in OMX file in CSV format
+# This is trivial, as the numpy library supports a function for this very purpose:
+#     np.savetxt(csv_filename, nparray, delimiter=",")
+#
+# Example: Export the SOV trip table
+output_csv = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/sov_tt.csv'
+trip_tables = openmatrix.open_file(trip_tables_file, 'r') 
+np.savetxt(output_csv, trip_tables['SOV'], delimiter=",")

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 # MDE_prototype_1.py - Model Data Explorer prototype #1.
 #
 # Exercise Python interface to OMX files:
@@ -8,13 +11,11 @@
 #     1. Calculate link VMT by functional class
 #     2. Calculate trip length distribution by mode
 #
-# Author: Ben Krepp and Margaret Atkinson
+# Author: Ben Krepp
 
 import openmatrix as omx
 import numpy as np
 import matplotlib.pyplot as plt
-import csv
-
 
 # Work with the trip tables OMX file
 
@@ -67,16 +68,20 @@ for mode in modes:
 # (2) Plot the data as a bar chart
 names = trip_length_by_mode.keys()
 values = trip_length_by_mode.values()
-plt.figure(figsize=(9,3))
-plt.title('A.M. Trip Length Distribution by Mode')
-plt.xlabel('Mode')
-plt.ylabel('Trip Length')
-plt.bar(names, values)
+for value in values:
+    scaled_values.append(value / 10e6)
+plt.title('Trip Length Distribution by Mode')
+plt.xlabel('Transportation Mode')
+plt.ylabel('Trip Length in 10^6 miles')
+plt.bar(names, scaled_values)
 plt.show()
 
-# (3) Get link VMT by functional class of road
+
+# (3) Calculate link VMT by functional class of road
+#
 flow_fn = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/AM_MMA_LinkFlow.csv'
-links_fn = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/statewide_links.csv'
+# The following CSV contains a mapping from link ID ('ID') to functional class ('SCEN_00_FU')
+links_fn = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/statewide_links_pruned.csv'
 
 df_flow = pd.read_csv(flow_fn, usecols=['ID1', 'Tot_Flow'], dtype={'ID1':np.int32, 'Tot_Flow':np.float64})
 df_links = pd.read_csv(links_fn, usecols=['ID', 'SCEN_00_FU'])
@@ -89,12 +94,36 @@ total_flow_by_fc = joined_data.groupby('SCEN_00_FU')['Tot_Flow'].sum()
 
 # The following statement gets the (somewhat funky) list of the functional classes found in the data:
 names = df_links.groupby(['SCEN_00_FU']).groups.keys()
-values = total_flow_by_fc
-plt.figure(figsize=(9,3))
+# for fc_name in fc_names:
+    # print(fc_name)
+
+# Prep to prune weird FC's from 'fc_names' (and prune corresponding value from total_flow_by_fc)
+pruned_fc_names = []
+pruned_total_flow_by_fc = [] 
+
+# Here ASERT len(fc_names) == len(total_flow_by_fc)
+if len(fc_names) != len(total_flow_by_fc):
+    print("Something is wrong:")
+    s = '    Length of fc_names = ' + str(len(fc_names))
+    print(s)
+    s = '    Length of total_flow_by_fc' + str(len(total_flow_by_fc))
+    print(s)
+
+# Do the actual pruning
+for (x,y) in zip(fc_names, total_flow_by_fc):
+    if x < 10:
+        pruned_fc_names.append(x)
+        pruned_total_flow_by_fc.append(y)
+        
+# Generate the plot of link VMT by functional class        
+scaled_values = []
+for value in pruned_total_flow_by_fc:
+    scaled_values.append(value / 10e7)
+
 plt.title('Link VMT by Functional Class')
 plt.xlabel('Functional Class')
-plt.ylabel('Link VMT')
-plt.bar(names, values)
+plt.ylabel('Link VMT in 10^7 Miles')
+plt.bar(pruned_fc_names, scaled_values)
 plt.show()
 
 # (DIGRESSION) Export data from table in OMX file in CSV format

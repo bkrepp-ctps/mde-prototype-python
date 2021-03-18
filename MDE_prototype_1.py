@@ -16,6 +16,7 @@
 import openmatrix as omx
 import numpy as np
 import matplotlib.pyplot as plt
+import geopandas
 
 # Work with the trip tables OMX file
 
@@ -124,6 +125,18 @@ plt.title('Link VMT by Functional Class')
 plt.xlabel('Functional Class')
 plt.ylabel('Link VMT in 10^7 Miles')
 plt.bar(pruned_fc_names, scaled_values)
+plt.show()
+
+# (4) Do some (very) simple mapping
+base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
+shpfile = 'candidate_CTPS_TAZ_STATE_2019.shp'
+fn = base + shpfile
+
+path_to_data = geopandas.datasets.get_path(fn)
+gdf = geopandas.read_file(path_to_data)
+gdf.set_index("id")
+
+gdf.plot("state", legend=True)
 plt.show()
 
 # (DIGRESSION) Export data from table in OMX file in CSV format

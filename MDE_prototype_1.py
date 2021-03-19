@@ -139,21 +139,26 @@ trip_tables = openmatrix.open_file(trip_tables_file, 'r')
 np.savetxt(output_csv, trip_tables['SOV'], delimiter=",")
 
 
-# (5) Do some (very) simple mapping
-#
-# Note: The code in this section currently only works from  the python command line;
-#       it does not work within an IPython Notebook for unknown reason(s).
+# (5) Do some simple mapping
 
 import geopandas
 
-# (5.1) Generate a map of the TAZes
+# (5.1) Generate a map of the TAZes, symbolized by state
 base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
+
 taz_shpfile = 'candidate_CTPS_TAZ_STATE_2019.shp'
 fn = base + taz_shpfile
-
 gdf = geopandas.read_file(fn)
 gdf.set_index("id")
-
 gdf.plot("state", legend=True)
+# The following line is not needed in the IPython Notebook environment
+plt.show()
+
+# (5.2) Generate a map of the links, symbolized by functional class
+links_shpfile = 'Statewide_Links_2018_BK_EPSG26986.shp'
+fn2 = base + links_shpfile
+gdf2 = geopandas.read_file(fn2)
+gdf2.set_index("ID")
+gdf2.plot("SCEN_00_FU", legend=True)
 # The following line is not needed in the IPython Notebook environment
 plt.show()

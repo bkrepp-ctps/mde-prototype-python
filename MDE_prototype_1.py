@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#
 # MDE_prototype_1.py - Model Data Explorer prototype #1.
 #
 # Exercise Python interface to OMX files:
@@ -15,8 +15,9 @@
 
 import openmatrix as omx
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
-import geopandas
+
 
 # Work with the trip tables OMX file
 
@@ -55,7 +56,7 @@ skim_omx.list_mappings()
 
 # Do some real work!
 #
-# (1) Get A.M. trip length distribution by mode [SOV, HOV, Bike, Walk])
+# (1) Get A.M. trip length distribution by mode [SOV, HOV, Bike, Walk]
 trip_length_by_mode = {}
 modes = [ 'SOV', 'HOV', 'Bike', 'Walk']
 for mode in modes:
@@ -94,7 +95,7 @@ joined_data = df_links.set_index('ID').join(df_flow.set_index('ID1'))
 total_flow_by_fc = joined_data.groupby('SCEN_00_FU')['Tot_Flow'].sum()
 
 # The following statement gets the (somewhat funky) list of the functional classes found in the data:
-names = df_links.groupby(['SCEN_00_FU']).groups.keys()
+fc_names = df_links.groupby(['SCEN_00_FU']).groups.keys()
 # for fc_name in fc_names:
     # print(fc_name)
 
@@ -116,7 +117,7 @@ for (x,y) in zip(fc_names, total_flow_by_fc):
         pruned_fc_names.append(x)
         pruned_total_flow_by_fc.append(y)
         
-# Generate the plot of link VMT by functional class        
+# (4) Generate the plot of link VMT by functional class        
 scaled_values = []
 for value in pruned_total_flow_by_fc:
     scaled_values.append(value / 10e7)
@@ -125,18 +126,7 @@ plt.title('Link VMT by Functional Class')
 plt.xlabel('Functional Class')
 plt.ylabel('Link VMT in 10^7 Miles')
 plt.bar(pruned_fc_names, scaled_values)
-plt.show()
-
-# (4) Do some (very) simple mapping
-base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
-shpfile = 'candidate_CTPS_TAZ_STATE_2019.shp'
-fn = base + shpfile
-
-path_to_data = geopandas.datasets.get_path(fn)
-gdf = geopandas.read_file(path_to_data)
-gdf.set_index("id")
-
-gdf.plot("state", legend=True)
+# The following line is not needed in the IPython Notebook environment
 plt.show()
 
 # (DIGRESSION) Export data from table in OMX file in CSV format
@@ -147,3 +137,23 @@ plt.show()
 output_csv = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/sov_tt.csv'
 trip_tables = openmatrix.open_file(trip_tables_file, 'r') 
 np.savetxt(output_csv, trip_tables['SOV'], delimiter=",")
+
+
+# (5) Do some (very) simple mapping
+#
+# Note: The code in this section currently only works from  the python command line;
+#       it does not work within an IPython Notebook for unknown reason(s).
+
+import geopandas
+
+# (5.1) Generate a map of the TAZes
+base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
+taz_shpfile = 'candidate_CTPS_TAZ_STATE_2019.shp'
+fn = base + taz_shpfile
+
+path_to_data = geopandas.datasets.get_path(fn)
+gdf = geopandas.read_file(path_to_data)
+gdf.set_index("id")
+
+gdf.plot("state", legend=True)
+plt.show()

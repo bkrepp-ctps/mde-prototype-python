@@ -151,9 +151,9 @@ base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
 taz_shpfile = 'candidate_CTPS_TAZ_STATE_2019.shp'
 fn = base + taz_shpfile
 
-path_to_data = geopandas.datasets.get_path(fn)
-gdf = geopandas.read_file(path_to_data)
+gdf = geopandas.read_file(fn)
 gdf.set_index("id")
 
 gdf.plot("state", legend=True)
+# The following line is not needed in the IPython Notebook environment
 plt.show()

@@ -3,7 +3,7 @@ Prototyping the Model Data Explorer (MDE) in Python
 
 ## Background
 
-The code in this prototype requires several Python libraries, each of which must be compatible with one another, and all of which must be compatible with the same "base" version of Python. The author has determed that, as of the time of writing (March 21, 2021) the latest "base" version of Python that is compatible with all required libraries is __Python 3.7_.  All required libraries (and specifically _geopandas_) is not compatible with Python 3.9.
+The code in this prototype requires several Python libraries, each of which must be compatible with one another, and all of which must be compatible with the same "base" version of Python. The author has determed that, as of the time of writing (March 21, 2021) the latest "base" version of Python that is compatible with all required libraries is __Python 3.7__.  All required libraries (and specifically _geopandas_) is not compatible with Python 3.8.
 
 Because of the many libraries required and their interdependences, it is pretty much essential to use a "package" manager such as __Anaconda__ to manage and compose a collection of packages that are compatible and work together successfuly. The remaider of this document _assumes_ the use of Anaconda. If the reader uses a different package manager, or attempts to "wing it" on his/her own, the author explicitly disclaims any responsibility for any problems he/she might encounter.
 

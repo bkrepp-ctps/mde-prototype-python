@@ -153,7 +153,7 @@ gdf.plot("state", figsize=(10.0,8.0), legend=True)
 # The following line is not needed in the IPython Notebook environment
 plt.show()
 
-# (5.2) Generate a map of the links, symbolized by functional class
+# (5.2) Generate a map of ALL the links, symbolized by functional class
 links_shpfile = 'Statewide_Links_2018_BK_EPSG26986.shp'
 fn2 = base + links_shpfile
 gdf2 = geopandas.read_file(fn2)
@@ -161,3 +161,7 @@ gdf2.set_index("ID")
 gdf2.plot("SCEN_00_FU", figsize=(10.0,8.0), legend=True)
 # The following line is not needed in the IPython Notebook environment
 plt.show()
+
+# (5.3) Generate a map of all links with a "reasonable" functional class
+real_roads = gdf2[gdf2["SCEN_00_FU"] < 10]
+real_roads.plot(("SCEN_00_FU", figsize=(10.0,8.0), legend=True)

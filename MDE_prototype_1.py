@@ -17,7 +17,7 @@ import openmatrix as omx
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import geopandas
 
 # Work with the trip tables OMX file
 
@@ -38,8 +38,6 @@ trip_tables_omx.list_mappings()
 # Returns: ['CTPS', 'ID', 'MAPC', 'extZ', 'intZ']
 taz_to_omxid = trip_tables_omx.mapping('ID')
 trip_tables_omx['SOV'][taz_to_omxid[1]][taz_to_omxid[1]]
-
-#####
 
 # Work with the skims OMX file
 
@@ -66,6 +64,9 @@ for mode in modes:
     print(s)
     trip_length_by_mode[mode]= tmp2
 # end_for
+
+# Cause matplotlib to display all "plots" in an external window:
+%matplotlib
 
 # (2) Plot the data as a bar chart
 names = trip_length_by_mode.keys()
@@ -140,9 +141,7 @@ np.savetxt(output_csv, trip_tables['SOV'], delimiter=",")
 
 
 # (5) Do some simple mapping
-
-import geopandas
-
+#
 # (5.1) Generate a map of the TAZes, symbolized by state
 base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
 
@@ -150,7 +149,7 @@ taz_shpfile = 'candidate_CTPS_TAZ_STATE_2019.shp'
 fn = base + taz_shpfile
 gdf = geopandas.read_file(fn)
 gdf.set_index("id")
-gdf.plot("state", legend=True)
+gdf.plot("state", figsize=(10.0,8.0), legend=True)
 # The following line is not needed in the IPython Notebook environment
 plt.show()
 
@@ -159,6 +158,6 @@ links_shpfile = 'Statewide_Links_2018_BK_EPSG26986.shp'
 fn2 = base + links_shpfile
 gdf2 = geopandas.read_file(fn2)
 gdf2.set_index("ID")
-gdf2.plot("SCEN_00_FU", legend=True)
+gdf2.plot("SCEN_00_FU", figsize=(10.0,8.0), legend=True)
 # The following line is not needed in the IPython Notebook environment
 plt.show()

@@ -35,6 +35,6 @@ Because of the many libraries required and their interdependences, it is pretty 
 Installing the __openmatrix__ package will auto-install the __tables__ (a.k.a. PyTables) library. The __geopandas__ package requires the __descartes__ and __ipympl__ packages in order to render geographic visualizations ("maps"). The __matplotlib__ library requires the __nb_conda__ and __nb_conda_kernels__ packages in order to render charts of any kind in an IPython notebook.
 
 
-Respectfully submitted,
-B. Krepp, attending metaphysician
+Respectfully submitted,  
+B. Krepp, attending metaphysician  
 9th day of the 2nd month of the Iron Ox Year 2148 (22 March 2021)

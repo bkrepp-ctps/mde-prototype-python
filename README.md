@@ -10,7 +10,7 @@ Because of the many libraries required and their interdependences, it is pretty 
 ## Create an Environment in Which to Run the Prototype
 
 1. Open __Anaconda Navigator__ (hereinafter "AC") and click the _Environments_ button in the left-hand window pane. 
-2. Click the _Create_ button at the bottom of the AC window to create an Anaconda _environment_ for this project, and give it a suitable name For reasons that will quickly become apparent, I've chosen to call my environment __base_py_37_omx_geop__. 
+2. Click the _Create_ button at the bottom of the AC window to create an Anaconda _environment_ for this project, and give it a suitable name For reasons that will quickly become apparent, the author has chosen to call his environment __base_py_37_omx_geop__. 
 3. Use the combo-box to the left of the _Channels_ button to select _Not installed_ option to search for packages that aren't (yet) part of your environment.
 4. Search for the __numpy__ library by entering "numpy" into the search box. 
 5. A list of libraries matching "numpy" (or upon which "numpy") is dependent will be displayed. 
@@ -33,3 +33,8 @@ Because of the many libraries required and their interdependences, it is pretty 
 ## Additional Background Information
 
 Installing the __openmatrix__ package will auto-install the __tables__ (a.k.a. PyTables) library. The __geopandas__ package requires the __descartes__ and __ipympl__ packages in order to render geographic visualizations ("maps"). The __matplotlib__ library requires the __nb_conda__ and __nb_conda_kernels__ packages in order to render charts of any kind in an IPython notebook.
+
+
+Respectfully submitted,
+B. Krepp, attending metaphysician
+9th day of the 2nd month of the Iron Ox Year 2148 (22 March 2021)

@@ -164,4 +164,4 @@ plt.show()
 
 # (5.3) Generate a map of all links with a "reasonable" functional class
 real_roads = gdf2[gdf2["SCEN_00_FU"] < 10]
-real_roads.plot(("SCEN_00_FU", figsize=(10.0,8.0), legend=True)
+real_roads.plot("SCEN_00_FU", figsize=(10.0,8.0), legend=True)

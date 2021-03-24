@@ -168,3 +168,9 @@ real_roads.plot(column="SCEN_00_FU", categorical=True, legend=True, figsize=(10.
 # The following line is not needed in the IPython Notebook environment
 plt.show()
 
+# (5.4) Join links data for "real roads" to flow data on 'ID'/'ID1' fields,
+#       and generate a (very crude) map of relative flow by link.
+real_roads_joined = real_roads.set_index('ID').join(df_flow.set_index('ID1'))
+real_roads_joined.plot(column='Tot_Flow', legend=True, figsize=(10.0,8.0))
+# The following line is not needed in the IPython Notebook environment
+plt.show()

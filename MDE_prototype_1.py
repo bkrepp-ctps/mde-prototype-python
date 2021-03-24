@@ -174,3 +174,30 @@ real_roads_joined = real_roads.set_index('ID').join(df_flow.set_index('ID1'))
 real_roads_joined.plot(column='Tot_Flow', legend=True, figsize=(10.0,8.0))
 # The following line is not needed in the IPython Notebook environment
 plt.show()
+
+# A very simple flow-level classification function
+def classify_flow(flow):
+	retval = 0
+	if flow == None:
+		retval = 0
+	elif flow < 100.0:
+		retval = 1
+	elif flow < 500.0:
+		retval = 2
+	elif flow < 1000.0:
+		retval = 3
+	elif flow < 5000.0:
+		retval = 4
+	elif flow < 10000.0:
+		retval = 5
+	else:
+		retval = 6
+	# end_if
+	return retval
+# end_def 
+
+# (5.5) Generate a map of 6-way classifcation of flow by link
+real_roads_joined2 = real_roads_joined.assign(flow_class=0)
+real_roads_joined2['flow_class'] = real_roads_joined2.apply(lambda row: classify_flow(row['Tot_Flow']), axis=1)
+# The following line is not needed in the IPython Notebook environment
+plt.show()

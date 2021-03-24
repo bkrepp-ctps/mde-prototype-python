@@ -1,6 +1,21 @@
 # mde-prototype-python
 Prototyping the Model Data Explorer (MDE) in Python
 
+## Requirements and Dependencies
+
+This prototype runs in an IPython notebook environment, and depends upon the following:
+* Python 3.8
+* numpy
+* pandas
+* openmatrix
+* matplotlib
+* descartes
+* ipympl
+* geopandas
+* nb_conda
+* nb_conda_kernels
+* geopandas
+
 ## Background
 
 The code in this prototype requires several Python libraries, each of which must be compatible with one another, and all of which must be compatible with the same "base" version of Python. The author has determed that, as of the time of writing (March 21, 2021) the latest "base" version of Python that is compatible with all required libraries is __Python 3.7__.  All required libraries (and specifically _geopandas_) is not compatible with Python 3.8.

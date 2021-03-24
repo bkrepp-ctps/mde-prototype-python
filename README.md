@@ -4,7 +4,7 @@ Prototyping the Model Data Explorer (MDE) in Python
 ## Requirements and Dependencies
 
 This prototype runs in an IPython notebook environment, and depends upon the following:
-* Python 3.8
+* Python 3.7
 * numpy
 * pandas
 * openmatrix

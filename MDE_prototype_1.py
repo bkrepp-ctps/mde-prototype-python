@@ -199,5 +199,6 @@ def classify_flow(flow):
 # (5.5) Generate a map of 6-way classifcation of flow by link
 real_roads_joined2 = real_roads_joined.assign(flow_class=0)
 real_roads_joined2['flow_class'] = real_roads_joined2.apply(lambda row: classify_flow(row['Tot_Flow']), axis=1)
+real_roads_joined2.plot(column="flow_class", categorical=True, legend=True, figsize=(10.0,8.0))
 # The following line is not needed in the IPython Notebook environment
 plt.show()

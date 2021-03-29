@@ -73,12 +73,18 @@ It is the most successful prototype to date (March 29, 2021), as it is able to
 
 This prototype is an attempt to use the __folium__ library to render maps.
 
+The __folium__ library was able to generate a map of the TAZes in around 23 wall-clock seconds, it required 56 seconds to render the
+model network links. Although rendering of the latter was _apparently_ successful, the notebook in which the map was generated
+crashed shortly thereafter with an out-of-memory error losing all previous work and rendering subsequent work impossible. (This 
+was observed when running the prototype on an unloaded desktop PC with 6 GB of RAM.)
+
 ## Prototype #3
 
 This prototype is an attempt to use the __keplergl__ library to render maps.
-While __kelpergl__ is able to render a map of the TAZes in less than 6 wall-clock seconds, but it was was not able to render the model network links at all. 
-An attempt to do so only produced a "blank map canvas". (Neither the IPython notebook containing the prototype code nor the IPython
-kernel running the notebook crashed or hung, however, so subsequent work was possible.)
+
+While __kelpergl__ was able to render a map of the TAZes in less than 6 wall-clock seconds, it was was not able to render the model network links at all. 
+An attempt to do so only produced a "blank map canvas".(Neither the IPython notebook containing the prototype code nor the IPython
+kernel running the notebook crashed or hung, however, so subsequent work was possible.
 
 Respectfully submitted,  
 B. Krepp, attending metaphysician  

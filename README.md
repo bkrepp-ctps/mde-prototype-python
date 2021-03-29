@@ -1,9 +1,14 @@
 # mde-prototype-python
-Prototyping the Model Data Explorer (MDE) in Python
+This repository several prototypes of the Model Data Explorer (MDE) in Python. 
+All prototypes run in an IPython notebook environment or under the Spyder IDE.  
+The principal difference among the various prototypes is the library used to render maps:
+1. Prototype #1 uses __matplotlib__
+2. Prototype #2 uses __folium__
+3. Prototype #3 uses __keplergl__
 
 ## Requirements and Dependencies
 
-This prototype runs in an IPython notebook environment, and depends upon the following:
+All prototypes depend upon the following libraries:
 * Python 3.7
 * numpy
 * pandas
@@ -14,13 +19,19 @@ This prototype runs in an IPython notebook environment, and depends upon the fol
 * geopandas
 * nb_conda
 * nb_conda_kernels
-* geopandas
 
-## Background
+## General Background Information
 
-The code in this prototype requires several Python libraries, each of which must be compatible with one another, and all of which must be compatible with the same "base" version of Python. The author has determed that, as of the time of writing (March 21, 2021) the latest "base" version of Python that is compatible with _all_ required libraries is __Python 3.7__.  All required libraries (and specifically _geopandas_) are _not_ compatible with Python 3.8.
+As noted above, the code in these prototypes requires several Python libraries, each of which must be compatible with one another, and all of which must be compatible
+with the same "base" version of Python.
+The author has determed that, as of the time of writing (March 21, 2021) the latest "base" version of Python that is compatible with _all_ required libraries
+is __Python 3.7__.  All required libraries (and specifically _geopandas_) are _not_ compatible with Python 3.8.
 
-Because of the many libraries required and their interdependences, it is pretty much essential to use a "package manager" such as __Anaconda__ to manage and compose a collection of packages that are compatible and work together successfuly. The remaider of this document _assumes_ the use of Anaconda. If the reader uses a different package manager, or attempts to "wing it" on his/her own, the author explicitly disclaims any responsibility for any problems he/she might encounter.
+Because of the many libraries required and their interdependences, it is pretty much essential to use a "package manager" such as __Anaconda__ to manage
+and compose a collection of packages that are compatible and work together successfuly. 
+The remaider of this document _assumes_ the use of Anaconda. 
+If the reader uses a different package manager, or attempts to "wing it" on his/her own, the author explicitly disclaims any responsibility for any problems 
+he/she might encounter. _Caveat emptor._
 
 ## Create an Environment in Which to Run the Prototype
 
@@ -47,8 +58,25 @@ Because of the many libraries required and their interdependences, it is pretty 
 
 ## Additional Background Information
 
-Installing the __openmatrix__ package will auto-install the __tables__ (a.k.a. PyTables) library. The __geopandas__ package requires the __descartes__ and __ipympl__ packages in order to render geographic visualizations ("maps"). The __matplotlib__ library requires the __nb_conda__ and __nb_conda_kernels__ packages in order to render charts of any kind in an IPython notebook.
+Installing the __openmatrix__ package will auto-install the __tables__ (a.k.a. PyTables) library. 
+The __geopandas__ package requires the __descartes__ and __ipympl__ packages in order to render geographic visualizations ("maps"). 
+The __matplotlib__ library requires the __nb_conda__ and __nb_conda_kernels__ packages in order to render charts of any kind in an IPython notebook.
 
+## Prototype #1
+
+This prototype uses the __matplotlib__ library to render maps.
+It is the most successful prototype to date (March 29, 2021), as it is able to render maps of all 5,839 TAZes and all 199,623 links in the model network.
+
+## Prototype #2
+
+This prototype is an attempt to use the __folium__ library to render maps.
+
+## Prototype #3
+
+This prototype is an attempt to use the __keplergl_library to render maps.
+While __kelpergl__ was found to be able to render a map of the TAZes very swiftly (in about 5-6 seconds of wall-clock time), it was not able to render the
+model network links at all. An attempt to do so only produced a "blank map canvas". (Neither the IPython notebook containing the prototype code nor the IPython
+kernel running the notebook crashed or hung, however, so subsequent work was possible.)
 
 Respectfully submitted,  
 B. Krepp, attending metaphysician  

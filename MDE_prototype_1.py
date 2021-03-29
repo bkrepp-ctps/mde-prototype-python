@@ -10,6 +10,8 @@
 # Sample tasks to perform:
 #     1. Calculate link VMT by functional class
 #     2. Calculate trip length distribution by mode
+#     3. Render the TAZes in a map
+#     4. Render the links in a map
 #
 # Author: Ben Krepp
 

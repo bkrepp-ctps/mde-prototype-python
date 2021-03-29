@@ -33,7 +33,14 @@ The remaider of this document _assumes_ the use of Anaconda.
 If the reader uses a different package manager, or attempts to "wing it" on his/her own, the author explicitly disclaims any responsibility for any problems 
 he/she might encounter. _Caveat emptor._
 
-## Create an Environment in Which to Run the Prototype
+## Create an Environment in Which to Run Each Prototype or Set of Prototypes
+
+Because of the subtle interdependencies among all the libraries required to run each prototype, I strongly recommend that _you create a dedicated Anaconda environment
+in which to run each prototype (or group of prototypes) that depend(s) upon a particular set of libraries_.
+
+### Environment for Prototype #1
+
+The following defines a "baseline" environment; it also fully defines the environment required to run Prototype #1.
 
 1. Open __Anaconda Navigator__ (hereinafter "AC") and click the _Environments_ button in the left-hand window pane. 
 2. Click the _Create_ button at the bottom of the AC window to create an Anaconda _environment_ for this project, and give it a suitable name For reasons that will quickly become apparent, the author has chosen to call his environment __base_py_37_omx_geop__. 
@@ -55,6 +62,15 @@ he/she might encounter. _Caveat emptor._
     1. Use the Windows __Start__ menu to launch an "Anaconda prompt" (i.e., "command box").
     2. Swich to the environment for this project by entering the command __conda activate base_py_37_omx_geop__ (or whatever your environment name is).
     3. Enter the command __python -m pip install openmatrix__.
+
+### Environment for Prototype #2
+
+Using the "baseline" environment as a starting point, use __python - m pip__ to install the __folium__ library.
+
+### Environment for Prototype #3
+
+Using the "baseline" environment as starting point, use __python -m pip__ to install the __keplergl__ library.
+Note: I have found that python _must_ be run in __Administrator mode__ in order for the installation of the keplergl library to run to completion successfully.
 
 ## Additional Background Information
 

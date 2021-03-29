@@ -73,7 +73,7 @@ This prototype is an attempt to use the __folium__ library to render maps.
 
 ## Prototype #3
 
-This prototype is an attempt to use the __keplergl_library to render maps.
+This prototype is an attempt to use the __keplergl__ library to render maps.
 While __kelpergl__ was found to be able to render a map of the TAZes very swiftly (in about 5-6 seconds of wall-clock time), it was not able to render the
 model network links at all. An attempt to do so only produced a "blank map canvas". (Neither the IPython notebook containing the prototype code nor the IPython
 kernel running the notebook crashed or hung, however, so subsequent work was possible.)

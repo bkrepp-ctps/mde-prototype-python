@@ -65,7 +65,9 @@ The __matplotlib__ library requires the __nb_conda__ and __nb_conda_kernels__ pa
 ## Prototype #1
 
 This prototype uses the __matplotlib__ library to render maps.
-It is the most successful prototype to date (March 29, 2021), as it is able to render maps of all 5,839 TAZes and all 199,623 links in the model network.
+It is the most successful prototype to date (March 29, 2021), as it is able to 
+* Render a map of all 5,839 TAZes in less than 4 wall-clock seconds, and
+* Render a map of all 199,623 links in the model network in less than 19 wall-clock seconds.
 
 ## Prototype #2
 
@@ -74,8 +76,8 @@ This prototype is an attempt to use the __folium__ library to render maps.
 ## Prototype #3
 
 This prototype is an attempt to use the __keplergl__ library to render maps.
-While __kelpergl__ was found to be able to render a map of the TAZes very swiftly (in about 5-6 seconds of wall-clock time), it was not able to render the
-model network links at all. An attempt to do so only produced a "blank map canvas". (Neither the IPython notebook containing the prototype code nor the IPython
+While __kelpergl__ is able to render a map of the TAZes in less than 6 wall-clock seconds, but it was was not able to render the model network links at all. 
+An attempt to do so only produced a "blank map canvas". (Neither the IPython notebook containing the prototype code nor the IPython
 kernel running the notebook crashed or hung, however, so subsequent work was possible.)
 
 Respectfully submitted,  

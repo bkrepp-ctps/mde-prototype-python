@@ -1,6 +1,6 @@
 # mde-prototype-python
 This repository several prototypes of the Model Data Explorer (MDE) in Python. 
-All prototypes run in an IPython notebook environment or under the Spyder IDE.  
+All prototypes run in an IPython notebook environment and under the Spyder IDE. 
 The principal difference among the various prototypes is the library used to render maps:
 1. Prototype #1 uses __matplotlib__
 2. Prototype #2 uses __folium__

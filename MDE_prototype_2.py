@@ -32,6 +32,7 @@ m
 
 # (6.1) Plot the TAZes with no symbolization/styling, for starters
 #       TAZ data is in GeoJson format
+base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
 taz_geojson_file = base + 'candidate_CTPS_TAZ_STATE_2019.geojson'
 taz_geojson = open(taz_geojson_file).read()
 folium.GeoJson(taz_geojson).add_to(m)

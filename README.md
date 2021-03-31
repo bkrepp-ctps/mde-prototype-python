@@ -72,6 +72,10 @@ Using the "baseline" environment as a starting point, use __python - m pip__ to 
 Using the "baseline" environment as starting point, use __python -m pip__ to install the __keplergl__ library.
 Note: I have found that python _must_ be run in __Administrator mode__ in order for the installation of the keplergl library to run to completion successfully.
 
+### Environment for Prototype #4
+
+Using the "baseline" environment as a starting point, use __python - m pip__ to install the __bokeh__ library.
+
 ## Additional Background Information
 
 Installing the __openmatrix__ package will auto-install the __tables__ (a.k.a. PyTables) library. 
@@ -102,6 +106,19 @@ While __kelpergl__ was able to render a map of the TAZes in less than 6 wall-clo
 An attempt to do so only produced a "blank map canvas".(Neither the IPython notebook containing the prototype code nor the IPython
 kernel running the notebook crashed or hung, however, so subsequent work was possible.
 
+## Prototype #4
+
+This prototype is an attempt to use the __bokeh__ library to render maps.
+
+This prototype was able to render a map of all the model links in just under 18 wall-clock seconds. Getting the prototype to render a map of the TAZes is a work-in-progress.
+The __bokeh__ library can only render a "map" from a geopandas data frame that has been suitably "post-processed". That is to say, bokeh has no native understanding of the
+"geometry" column of a geopandas data frame: it can only work with raw 'x' and 'y' coordinate values. Data frame columns for 'x' and 'y' values can be created trivially
+for point geometry features. For lines, mulit-lines, polygons, and multipolygons more work is required. The python module "geopandas_2_bokeh_tenkanan.py" 
+by Hennrikki Tenkanen, which has been copied into this repository seems to "do the job" correctly for lines / multi-lines (e.g., the model links). It, however, 
+hasn't yet been shown to work for polygons or multi-polygons (e.g., the TAZes).
+
+<hr/>
+
 Respectfully submitted,  
 B. Krepp, attending metaphysician  
-9th day of the 2nd month of the Iron Ox Year 2148 (22 March 2021)
+Repository created: 9th day of the 2nd month of the Iron Ox Year 2148 (22 March 2021)

@@ -213,3 +213,11 @@ gdf3.set_index("id")
 gdf3.plot("state", figsize=(10.0,8.0), legend=True)
 # The following line is not needed in the IPython Notebook environment
 plt.show()
+
+# (5.7) Generate a map of ALL the geometrically "simplified" links symbolized by functional class
+simp_links_shpfile = 'Statewide_Links_2018_BK_EPSG26986_simp_10m.shp'
+fn4 = base + simp_links_shpfile
+gdf4 = geopandas.read_file(fn4)
+gdf4.plot("SCEN_00_FU", figsize=(10.0,8.0), legend=True)
+# The following line is not needed in the IPython Notebook environment
+plt.show()

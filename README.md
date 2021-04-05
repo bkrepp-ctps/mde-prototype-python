@@ -5,6 +5,7 @@ The principal difference among the various prototypes is the library used to (at
 1. Prototype #1 uses __matplotlib__
 2. Prototype #2 uses __folium__
 3. Prototype #3 uses __keplergl__
+4. Prototype #4 attempts to use __bokeh__
 
 ## Requirements and Dependencies
 
@@ -25,7 +26,7 @@ All prototypes depend upon the following libraries:
 As noted above, the code in these prototypes requires several Python libraries, each of which must be compatible with one another, and all of which must be compatible
 with the same "base" version of Python.
 The author has determed that, as of the time of writing (March 21, 2021) the latest "base" version of Python that is compatible with _all_ required libraries
-is __Python 3.7__.  All required libraries (and specifically _geopandas_) are _not_ compatible with Python 3.8.
+is __Python 3.7__.  Some of the required libraries (and specifically _geopandas_) are _not_ compatible with Python 3.8.
 
 Because of the many libraries required and their interdependences, it is pretty much essential to use a "package manager" such as __Anaconda__ to manage
 and compose a collection of packages that are compatible and work together successfuly. 

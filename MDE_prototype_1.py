@@ -82,6 +82,41 @@ plt.bar(names, scaled_values)
 plt.show()
 
 
+###############################################################
+# Now, let's do what Marty _really_ asked us to do:
+# For each mode, make a plot of trip-length distribution
+#
+# t_lengths: TAZ-to-TAZ distance, no?
+t_lengths = skim_omx['Length (Skim)']
+
+# Let's find out a  bit about TAZ-to-TAZ distances
+np.min(t_lengths)
+np.max(t_lengths)
+np.mean(t_lengths)
+np.std(t_lengths)
+
+# Brute-force display of distribution of TAZ-to-TAZ trip-lengths
+plt.hist(t_lengths, bins=6)
+
+# (1a) Trip length distribution for SOV mode
+tt_sov = trip_tables_omx['SOV']
+
+# 'bins' for trip length distribution histograms
+bins =       [ 1.0,      5.0,      10.0,       20.0,       50.0,      100.0,        np.max(t_lengths) ]
+bin_labels = [ '< 1 mi', '1-5 mi', '5-10 mi', '10-20 mi', '20-50 mi', '50-100 mi', '> 100 mi' ]
+
+sov_product = np.multiply(tt_sov, t_lengths)
+sov_hist, bin_edges = np.histogram(sov_product, bins)
+
+# Scale sov_hist for display purposes
+sov_hist_scaled = np.divide(sov_hist, 10e5)
+plt.title('Trip Length Distribution for SOV Mode')
+# plt.xlabel(bin_labels[:-1])
+plt.ylabel('Number of Trips x 10^5')
+plt.bar(bin_edges[:-1], sov_hist_scaled)
+
+
+
 # (3) Calculate link VMT by functional class of road
 #
 flow_fn = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/AM_MMA_LinkFlow.csv'

@@ -227,3 +227,12 @@ real_roads_simp = gdf4[gdf4["SCEN_00_FU"] < 10]
 real_roads_simp.plot(column="SCEN_00_FU", categorical=True, legend=True, figsize=(10.0,8.0))
 # The following line is not needed in the IPython Notebook environment
 plt.show()
+
+# (5.9) Join links data for simplified "real roads" to flow data on 'ID'/'ID1' fields,
+#		and generate a map of 6-way classifcation of flow by link
+real_roads_simp_joined = real_roads_simp.set_index('ID').join(df_flow.set_index('ID1'))
+real_roads_simp_joined2 = real_roads_simp_joined.assign(flow_class=0)
+real_roads_simp_joined2['flow_class'] = real_roads_simp_joined2.apply(lambda row: classify_flow(row['Tot_Flow']), axis=1)
+real_roads_simp_joined2.plot(column="flow_class", categorical=True, legend=True, figsize=(10.0,8.0))
+# The following line is not needed in the IPython Notebook environment
+plt.show()

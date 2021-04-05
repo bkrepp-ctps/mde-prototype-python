@@ -115,6 +115,33 @@ plt.title('Trip Length Distribution for SOV Mode')
 plt.ylabel('Number of Trips x 10^5')
 plt.bar(bin_edges[:-1], sov_hist_scaled)
 
+# (1b) Trip length distribution for HOV mode
+tt_hov = trip_tables_omx['HOV']
+hov_product = np.multiply(tt_hov, t_lengths)
+hov_hist, bin_edges = np.histogram(hov_product, bins)
+hov_hist_scaled = np.divide(hov_hist, 10e5)
+plt.title('Trip Length Distribution for HOV Mode')
+plt.ylabel('Number of Trips x 10^5')
+plt.bar(bin_edges[:-1], hov_hist_scaled)
+
+# (1c) Trip length distribution for Bike mode
+tt_bike = trip_tables_omx['Bike']
+bike_product = np.multiply(tt_bike, t_lengths)
+bike_hist, bin_edges = np.histogram(bike_product, bins)
+bike_hist_scaled = np.divide(bike_hist, 10e5)
+plt.title('Trip Length Distribution for Bike Mode')
+plt.ylabel('Number of Trips x 10^5')
+plt.bar(bin_edges[:-1], bike_hist_scaled)
+
+# (1d) Trip length distribution for Walk mode
+tt_walk = trip_tables_omx['Walk']
+walk_product = np.multiply(tt_walk, t_lengths)
+walk_hist, bin_edges = np.histogram(walk_product, bins)
+walk_hist_scaled = np.divide(walk_hist, 10e5)
+plt.title('Trip Length Distribution for Walk Mode')
+plt.ylabel('Number of Trips x 10^5')
+plt.bar(bin_edges[:-1], walk_hist_scaled)
+
 
 
 # (3) Calculate link VMT by functional class of road

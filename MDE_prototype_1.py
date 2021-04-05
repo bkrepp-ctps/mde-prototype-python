@@ -236,3 +236,15 @@ real_roads_simp_joined2['flow_class'] = real_roads_simp_joined2.apply(lambda row
 real_roads_simp_joined2.plot(column="flow_class", categorical=True, legend=True, figsize=(10.0,8.0))
 # The following line is not needed in the IPython Notebook environment
 plt.show()
+
+# (5.10) Same as 5.9, but using a somewhat more meaningful symbolization.
+cmap = plt.get_cmap('jet', 7)
+real_roads_simp_joined2.plot(column="flow_class", categorical=True, cmap=cmap, legend=True, figsize=(10.0,8.0))
+# The following line is not needed in the IPython Notebook environment
+plt.show()
+
+# (5.11) Same as 5.9, but using a colormap of our own.
+from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+col_dict = { 1 : "gray", 2 : "blue", 3 : "green", 4 : "goldenrod", 5 : "orangered", 6 : "red" }
+cmap2 = ListedColormap([col_dict[x] for x in col_dict.keys()])
+real_roads_simp_joined2.plot(column="flow_class", categorical=True, cmap=cmap2, legend=True, figsize=(10.0,8.0))

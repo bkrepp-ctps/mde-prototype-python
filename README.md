@@ -5,7 +5,7 @@ The principal difference among the various prototypes is the library used to (at
 1. Prototype #1 uses __matplotlib__
 2. Prototype #2 uses __folium__
 3. Prototype #3 uses __keplergl__
-4. Prototype #4 attempts to use __bokeh__
+4. Prototype #4 is an attempt to use __bokeh__
 
 ## Requirements and Dependencies
 

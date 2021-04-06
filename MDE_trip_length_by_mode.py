@@ -100,19 +100,57 @@ plt.bar(names, values)
 
 
 
+# Genericized routine to generate trip-length distribution by mode
+# 
+def get_tld_for_mode(trip_lengths_skim, tt_omx, mode_name, bins):
+	# Initialize return value
+	results = [0.0 for x in bins]
+	
+	# Flatten trip_lengths array
+	t_lengths_np = np.array(trip_lengths_skim)
+	t_lengths_flat = t_lengths_np.flatten(order='C')
+	
+	# Number of trips TAZ-to-TAZ using specified mode
+	tt = tt_omx[mode_name]
+	tt_np =	 np.array(tt)
+	tt_flat = tt_np.flatten(order='C')
+	
+	# Classify trip lengths into bins
+	classification = np.digitize(t_lengths_flat, bins, right=False)
+	
+	for (num_trips, bucket_ix) in zip(tt_flat, classification):
+		results[bucket_ix] += num_trips
+	# end_for
 
+	return results
+# get_tld_for_mode()
 
+# Routline to plot  trip length distribution as bar graph
+#
+def plot_tld_for_mode(tld_array, bin_labels, plot_title):
+	names = bin_labels
+	values = results
+	plt.title(plot_title)
+	plt.xlabel('Trip Length')
+	plt.ylabel('Number of Trips')
+	plt.bar(names, values)
+# plot_tld_for_mode()
 
+# Trip-length distribution for SOV mode
+sov_tld = get_tld_for_mode(skim_omx['Length (Skim)'], trip_tables_omx, 'SOV', bins)
+plot_tld_for_mode(sov_tld, bin_labels, 'SOV Trip Length Distribution')
 
+# Trip-length distribution for HOV mode
+hov_tld = get_tld_for_mode(skim_omx['Length (Skim)'], trip_tables_omx, 'HOV', bins)
+plot_tld_for_mode(hov_tld, bin_labels, 'HOV Trip Length Distribution')
 
+# Trip-length distribution for Bike mode
+bike_tld = get_tld_for_mode(skim_omx['Length (Skim)'], trip_tables_omx, 'Bike', bins)
+plot_tld_for_mode(bike_tld, bin_labels, 'Bike Trip Length Distribution')
 
-
-
-
-
-#############################################################
-
-# 'bins' for trip length distribution histograms
+# Trip-length distribution for Walk mode
+walk_tld = get_tld_for_mode(skim_omx['Length (Skim)'], trip_tables_omx, 'Walk', bins)
+plot_tld_for_mode(walk_tld, bin_labels, 'Bike Trip Length Distribution')
 
 
 

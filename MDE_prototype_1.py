@@ -4,12 +4,12 @@
 # MDE_prototype_1.py - Model Data Explorer prototype #1.
 #
 # Exercise Python interface to OMX files:
-#     1. Sample 'trip tables' OMX file: 'AfterSC_Final_AM_Tables.omx'
-#     2. Sample 'skims' OMX file: 'AM_SOV_Skim.omx'
+#	  1. Sample 'trip tables' OMX file: 'AfterSC_Final_AM_Tables.omx'
+#	  2. Sample 'skims' OMX file: 'AM_SOV_Skim.omx'
 # 
 # Sample tasks to perform:
-#     1. Calculate link VMT by functional class
-#     2. Calculate trip length distribution by mode
+#	  1. Calculate link VMT by functional class
+#	  2. Calculate trip length distribution by mode
 #     3. Render the TAZes in a map
 #     4. Render the links in a map
 #
@@ -21,14 +21,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import geopandas
 
+
 # Work with the trip tables OMX file
 
 trip_tables_file = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/AfterSC_Final_AM_Tables.omx'
 trip_tables_omx = omx.open_file(trip_tables_file, 'r')
 trip_tables_omx.list_matrices()
 # Returns: ['Bike', 'DAT_Boat', 'DAT_CR', 'DAT_LB', 'DAT_RT', 'DET_Boat', 'DET_CR', 'DET_LB', 'DET_RT', 
-#           'HOV', 'HOV2p', 'HOV3p', 'HOV_Person_Trips', 'Heavy_Truck', 'Heavy_Truck_HazMat', 'Light_Truck', 
-#           'Medium_Truck', 'Medium_Truck_HazMat', 'SOV', 'WAT', 'Walk']
+#			'HOV', 'HOV2p', 'HOV3p', 'HOV_Person_Trips', 'Heavy_Truck', 'Heavy_Truck_HazMat', 'Light_Truck', 
+#			'Medium_Truck', 'Medium_Truck_HazMat', 'SOV', 'WAT', 'Walk']
 trip_tables_omx.shape()
 # Returns: (5839, 5839)
 
@@ -41,13 +42,15 @@ trip_tables_omx.list_mappings()
 taz_to_omxid = trip_tables_omx.mapping('ID')
 trip_tables_omx['SOV'][taz_to_omxid[1]][taz_to_omxid[1]]
 
+#####
+
 # Work with the skims OMX file
 
 skim_file = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/AM_SOV_Skim.omx'
 skim_omx = omx.open_file(skim_file, 'r')
 skim_omx.list_matrices()
 # Returns: ['Auto_Toll (Skim)', 'CongTime', 'CongTime_wTerminalTimes', 'Drive_Cost', 
-#           'LT_Toll (Skim)', 'Length (Skim)', 'TerminalTimes', 'Total_Cost']
+#			'LT_Toll (Skim)', 'Length (Skim)', 'TerminalTimes', 'Total_Cost']
 skim_omx.shape()
 # Returns: (5839, 5839)
 skim_omx.list_mappings()
@@ -60,89 +63,24 @@ skim_omx.list_mappings()
 trip_length_by_mode = {}
 modes = [ 'SOV', 'HOV', 'Bike', 'Walk']
 for mode in modes:
-    tmp1 = np.multiply(skim_omx['Length (Skim)'], trip_tables_omx[mode])
-    tmp2 = np.sum(tmp1)
-    s = mode + ' trip length = ' + str(tmp1)
-    print(s)
-    trip_length_by_mode[mode]= tmp2
+	tmp1 = np.multiply(skim_omx['Length (Skim)'], trip_tables_omx[mode])
+	tmp2 = np.sum(tmp1)
+	s = mode + ' trip length = ' + str(tmp1)
+	# print(s)
+	trip_length_by_mode[mode]= tmp2
 # end_for
-
-# Cause matplotlib to display all "plots" in an external window:
-%matplotlib
 
 # (2) Plot the data as a bar chart
 names = trip_length_by_mode.keys()
 values = trip_length_by_mode.values()
+scaled_values = []
 for value in values:
-    scaled_values.append(value / 10e6)
+	scaled_values.append(value / 10e6)
 plt.title('Trip Length Distribution by Mode')
 plt.xlabel('Transportation Mode')
 plt.ylabel('Trip Length in 10^6 miles')
 plt.bar(names, scaled_values)
 plt.show()
-
-
-###############################################################
-# Now, let's do what Marty _really_ asked us to do:
-# For each mode, make a plot of trip-length distribution
-#
-# t_lengths: TAZ-to-TAZ distance, no?
-t_lengths = skim_omx['Length (Skim)']
-
-# Let's find out a  bit about TAZ-to-TAZ distances
-np.min(t_lengths)
-np.max(t_lengths)
-np.mean(t_lengths)
-np.std(t_lengths)
-
-# Brute-force display of distribution of TAZ-to-TAZ trip-lengths
-plt.hist(t_lengths, bins=6)
-
-# (1a) Trip length distribution for SOV mode
-tt_sov = trip_tables_omx['SOV']
-
-# 'bins' for trip length distribution histograms
-bins =       [ 1.0,      5.0,      10.0,       20.0,       50.0,      100.0,        np.max(t_lengths) ]
-bin_labels = [ '< 1 mi', '1-5 mi', '5-10 mi', '10-20 mi', '20-50 mi', '50-100 mi', '> 100 mi' ]
-
-sov_product = np.multiply(tt_sov, t_lengths)
-sov_hist, bin_edges = np.histogram(sov_product, bins)
-
-# Scale sov_hist for display purposes
-sov_hist_scaled = np.divide(sov_hist, 10e5)
-plt.title('Trip Length Distribution for SOV Mode')
-# plt.xlabel(bin_labels[:-1])
-plt.ylabel('Number of Trips x 10^5')
-plt.bar(bin_edges[:-1], sov_hist_scaled)
-
-# (1b) Trip length distribution for HOV mode
-tt_hov = trip_tables_omx['HOV']
-hov_product = np.multiply(tt_hov, t_lengths)
-hov_hist, bin_edges = np.histogram(hov_product, bins)
-hov_hist_scaled = np.divide(hov_hist, 10e5)
-plt.title('Trip Length Distribution for HOV Mode')
-plt.ylabel('Number of Trips x 10^5')
-plt.bar(bin_edges[:-1], hov_hist_scaled)
-
-# (1c) Trip length distribution for Bike mode
-tt_bike = trip_tables_omx['Bike']
-bike_product = np.multiply(tt_bike, t_lengths)
-bike_hist, bin_edges = np.histogram(bike_product, bins)
-bike_hist_scaled = np.divide(bike_hist, 10e5)
-plt.title('Trip Length Distribution for Bike Mode')
-plt.ylabel('Number of Trips x 10^5')
-plt.bar(bin_edges[:-1], bike_hist_scaled)
-
-# (1d) Trip length distribution for Walk mode
-tt_walk = trip_tables_omx['Walk']
-walk_product = np.multiply(tt_walk, t_lengths)
-walk_hist, bin_edges = np.histogram(walk_product, bins)
-walk_hist_scaled = np.divide(walk_hist, 10e5)
-plt.title('Trip Length Distribution for Walk Mode')
-plt.ylabel('Number of Trips x 10^5')
-plt.bar(bin_edges[:-1], walk_hist_scaled)
-
-
 
 # (3) Calculate link VMT by functional class of road
 #
@@ -162,7 +100,7 @@ total_flow_by_fc = joined_data.groupby('SCEN_00_FU')['Tot_Flow'].sum()
 # The following statement gets the (somewhat funky) list of the functional classes found in the data:
 fc_names = df_links.groupby(['SCEN_00_FU']).groups.keys()
 # for fc_name in fc_names:
-    # print(fc_name)
+	# print(fc_name)
 
 # Prep to prune weird FC's from 'fc_names' (and prune corresponding value from total_flow_by_fc)
 pruned_fc_names = []
@@ -170,22 +108,22 @@ pruned_total_flow_by_fc = []
 
 # Here ASERT len(fc_names) == len(total_flow_by_fc)
 if len(fc_names) != len(total_flow_by_fc):
-    print("Something is wrong:")
-    s = '    Length of fc_names = ' + str(len(fc_names))
-    print(s)
-    s = '    Length of total_flow_by_fc' + str(len(total_flow_by_fc))
-    print(s)
+	print("Something is wrong:")
+	s = '	 Length of fc_names = ' + str(len(fc_names))
+	print(s)
+	s = '	 Length of total_flow_by_fc' + str(len(total_flow_by_fc))
+	print(s)
 
 # Do the actual pruning
 for (x,y) in zip(fc_names, total_flow_by_fc):
-    if x < 10:
-        pruned_fc_names.append(x)
-        pruned_total_flow_by_fc.append(y)
-        
-# (4) Generate the plot of link VMT by functional class        
+	if x < 10:
+		pruned_fc_names.append(x)
+		pruned_total_flow_by_fc.append(y)
+		
+# (4) Generate the plot of link VMT by functional class		   
 scaled_values = []
 for value in pruned_total_flow_by_fc:
-    scaled_values.append(value / 10e7)
+	scaled_values.append(value / 10e6)
 
 plt.title('Link VMT by Functional Class')
 plt.xlabel('Functional Class')
@@ -196,7 +134,7 @@ plt.show()
 
 # (DIGRESSION) Export data from table in OMX file in CSV format
 # This is trivial, as the numpy library supports a function for this very purpose:
-#     np.savetxt(csv_filename, nparray, delimiter=",")
+#	  np.savetxt(csv_filename, nparray, delimiter=",")
 #
 # Example: Export the SOV trip table
 output_csv = r'C:/Users/ben_k/work_stuff/tdm/datastore/sample_data/sov_tt.csv'
@@ -204,7 +142,7 @@ trip_tables = openmatrix.open_file(trip_tables_file, 'r')
 np.savetxt(output_csv, trip_tables['SOV'], delimiter=",")
 
 
-# (5) Do some simple mapping
+# (5) Do some (very) simple mapping
 #
 # (5.1) Generate a map of the TAZes, symbolized by state
 base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
@@ -233,11 +171,9 @@ real_roads.plot(column="SCEN_00_FU", categorical=True, legend=True, figsize=(10.
 plt.show()
 
 # (5.4) Join links data for "real roads" to flow data on 'ID'/'ID1' fields,
-#       and generate a (very crude) map of relative flow by link.
+#		and generate a (very crude) map of relative flow by link.
 real_roads_joined = real_roads.set_index('ID').join(df_flow.set_index('ID1'))
 real_roads_joined.plot(column='Tot_Flow', legend=True, figsize=(10.0,8.0))
-# The following line is not needed in the IPython Notebook environment
-plt.show()
 
 # A very simple flow-level classification function
 def classify_flow(flow):
@@ -264,8 +200,6 @@ def classify_flow(flow):
 real_roads_joined2 = real_roads_joined.assign(flow_class=0)
 real_roads_joined2['flow_class'] = real_roads_joined2.apply(lambda row: classify_flow(row['Tot_Flow']), axis=1)
 real_roads_joined2.plot(column="flow_class", categorical=True, legend=True, figsize=(10.0,8.0))
-# The following line is not needed in the IPython Notebook environment
-plt.show()
 
 # (5.6) Generate a map of the geometrically "simplified" TAZes, symbolized by state
 simp_taz_shpfile = 'candidate_CTPS_TAZ_STATE_2019_simp_10m.shp'
@@ -310,3 +244,4 @@ from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 col_dict = { 1 : "gray", 2 : "blue", 3 : "green", 4 : "goldenrod", 5 : "orangered", 6 : "red" }
 cmap2 = ListedColormap([col_dict[x] for x in col_dict.keys()])
 real_roads_simp_joined2.plot(column="flow_class", categorical=True, cmap=cmap2, legend=True, figsize=(10.0,8.0))
+

@@ -88,17 +88,11 @@ for (num_trips, trip_len, bucket_ix) in zip(tt_sov_flat, t_lengths_flat, classif
 	results[bucket_ix] += num_trips
 # end_for
 
-results_np = np.array(results)
-results_np_int = results_np.astype(int)
-
-names = bin_labels
-values = results_np_int
+fig, ax = plt.subplots()
+ax.bar(bin_labels, results)
 plt.title('SOV Trip Length Distribution')
 plt.xlabel('Trip Length')
 plt.ylabel('Number of Trips')
-plt.bar(names, values)
-
-
 
 # Genericized routine to generate trip-length distribution by mode
 # 
@@ -129,7 +123,7 @@ def get_tld_for_mode(trip_lengths_skim, tt_omx, mode_name, bins):
 #
 def plot_tld_for_mode(tld_array, bin_labels, plot_title):
 	names = bin_labels
-	values = results
+	values = tld_array
 	plt.title(plot_title)
 	plt.xlabel('Trip Length')
 	plt.ylabel('Number of Trips')
@@ -150,7 +144,4 @@ plot_tld_for_mode(bike_tld, bin_labels, 'Bike Trip Length Distribution')
 
 # Trip-length distribution for Walk mode
 walk_tld = get_tld_for_mode(skim_omx['Length (Skim)'], trip_tables_omx, 'Walk', bins)
-plot_tld_for_mode(walk_tld, bin_labels, 'Bike Trip Length Distribution')
-
-
-
+plot_tld_for_mode(walk_tld, bin_labels, 'Walk Trip Length Distribution')

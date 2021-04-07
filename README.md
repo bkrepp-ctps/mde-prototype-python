@@ -23,10 +23,10 @@ All prototypes depend upon the following libraries:
 
 ## General Background Information
 
-As noted above, the code in these prototypes requires several Python libraries, each of which must be compatible with one another, and all of which must be compatible
+As noted above, the code in these prototypes requires several Python libraries, each of which must be compatible with all the others, and all of which must be compatible
 with the same "base" version of Python.
 The author has determed that, as of the time of writing (March 21, 2021) the latest "base" version of Python that is compatible with _all_ required libraries
-is __Python 3.7__.  Some of the required libraries (and specifically _geopandas_) are _not_ compatible with Python 3.8.
+is __Python 3.7__.  Some of the required libraries (and specifically _geopandas_) are currently _not_ compatible with Python 3.8.
 
 Because of the many libraries required and their interdependences, it is pretty much essential to use a "package manager" such as __Anaconda__ to manage
 and compose a collection of packages that are compatible and work together successfuly. 
@@ -66,7 +66,7 @@ The following defines a "baseline" environment; it also fully defines the enviro
 
 ### Environment for Prototype #2
 
-Using the "baseline" environment as a starting point, use __python - m pip__ to install the __folium__ library.
+Using the "baseline" environment as a starting point, use __python -m pip__ to install the __folium__ library.
 
 ### Environment for Prototype #3
 
@@ -75,7 +75,7 @@ Note: I have found that python _must_ be run in __Administrator mode__ in order 
 
 ### Environment for Prototype #4
 
-Using the "baseline" environment as a starting point, use __python - m pip__ to install the __bokeh__ library.
+Using the "baseline" environment as a starting point, use __python -m pip__ to install the __bokeh__ library.
 
 ## Additional Background Information
 

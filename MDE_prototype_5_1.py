@@ -68,6 +68,7 @@ fig = px.choropleth(gdf, geojson=towns, locations='town_id', featureidkey='prope
 					color='fourcolor',
 					# color_discrete_map={1 : "red", 2 : "green", 3 : "blue", 3 : "goldenrod"},
 					scope='usa', projection='albers usa', fitbounds='geojson')
+fig.show()
 
 # Example 3 - the first really "working" example
 #
@@ -76,6 +77,7 @@ fig = px.choropleth(gdf, geojson=towns, locations='town_id', featureidkey='prope
 					color='type',
 					color_discrete_map={ "T" : "red", "C" : "green", "TC" : "blue" },
 					scope='usa', projection='albers usa', fitbounds='geojson')
+fig.show()
 
 # Example 4
 #
@@ -89,4 +91,24 @@ fig = px.choropleth(gdf, geojson=towns, locations='town_id', featureidkey='prope
 					color='fourcolor_str',
 					color_discrete_map={ "1" : "red", "2" : "green", "3" : "blue", "4" : "goldenrod" },
 					scope='usa', projection='albers usa', fitbounds='geojson')
+fig.show()
 
+
+# Example 5
+#
+# Render the (simplified) TAZes.
+#
+# Load simplified TAZ geojson file into an in-core GeoJSON object.
+# This will be used by plotly.express to render GEOMETRY.
+#
+taz_geojson_file = base + 'candidate_CTPS_TAZ_STATE_2019_simp_10m.geojson'
+taz_geojson = open(taz_geojson_file).read()
+tazes = json.loads(taz_geojson)
+# Load the TAZ 'attributes' from a CSV file into a pandas data frame.
+taz_attributes_csv = base + 'taz_attributes.csv'
+taz_attr_df = pd.read_csv(taz_attributes_csv)
+
+fig = px.choropleth(taz_attr_df, geojson=tazes, locations='id', featureidkey='properties.id',
+					color='state',
+					scope='usa', projection='albers usa', fitbounds='geojson')
+fig.show()

@@ -112,3 +112,22 @@ fig = px.choropleth(taz_attr_df, geojson=tazes, locations='id', featureidkey='pr
 					color='state',
 					scope='usa', projection='albers usa', fitbounds='geojson')
 fig.show()
+
+# Example 6 (work-in-progress)
+#
+# Render geometry in a more appropriate projection for Massachusetts.
+# We use MassGIS's COUNTIES_POLYM layer for prototyping this, as there are many fewer verties to render.
+
+counties_geojson_file = base + 'MGIS_COUNTIES_POLYM.geojson'
+counties_geojson = open(counties_geojson_file).read()
+counties = json.loads(counties_geojson)
+
+counties_attributes_csv = base + 'counties_attributes.csv'
+counties_attr_df = pd.read_csv(counties_attributes_csv)
+
+fig = px.choropleth(counties_attr_df, geojson=counties, locations='fips_id', featureidkey='properties.fips_id',
+					color='county',
+					scope='usa', projection='albers usa', fitbounds='geojson')
+fig.show()
+
+# Next: Use a projection better suited to the Geometry of Massachusetts.

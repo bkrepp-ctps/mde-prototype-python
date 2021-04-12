@@ -49,7 +49,7 @@ gdf = geopandas.read_file(towns_geojson_file)
 fig = px.choropleth(gdf, geojson=towns, locations='town_id', featureidkey='properties.town_id',
                     color='fourcolor',
                     scope='usa', projection='albers usa', fitbounds='geojson')
-fig.sho()
+fig.show()
 
 # Yes, we know that the map is using Albers USA projection, and the symbolization uses
 # a continuous scale. Addressing these two points are the next steps.

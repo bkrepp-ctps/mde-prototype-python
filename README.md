@@ -6,6 +6,7 @@ The principal difference among the various prototypes is the library used to (at
 2. Prototype #2 uses __folium__
 3. Prototype #3 uses __keplergl__
 4. Prototype #4 is an attempt to use __bokeh__
+5. Prototype #5 is a work-in-progress to use __plotly.express__
 
 ## Requirements and Dependencies
 
@@ -77,6 +78,10 @@ Note: I have found that python _must_ be run in __Administrator mode__ in order 
 
 Using the "baseline" environment as a starting point, use __python -m pip__ to install the __bokeh__ library.
 
+### Environment for Prototype #5
+
+Using the "baseline" environment as a starting point, use __python -m pip__ to install the __plotly__ library.
+
 ## Additional Background Information
 
 Installing the __openmatrix__ package will auto-install the __tables__ (a.k.a. PyTables) library. 
@@ -117,6 +122,10 @@ The __bokeh__ library can only render a "map" from a geopandas data frame that h
 for point geometry features. For lines, mulit-lines, polygons, and multipolygons more work is required. The python module "geopandas_2_bokeh_tenkanan.py" 
 by Hennrikki Tenkanen, which has been copied into this repository seems to "do the job" correctly for lines / multi-lines (e.g., the model links). It, however, 
 hasn't yet been shown to work for polygons or multi-polygons (e.g., the TAZes).
+
+## Prototype 5
+
+This prototype is a work-in-progress exploring the use of the __plotly__ library to render maps.
 
 <hr/>
 

@@ -116,7 +116,8 @@ kernel running the notebook crashed or hung, however, so subsequent work was pos
 
 This prototype is an attempt to use the __bokeh__ library to render maps.
 
-This prototype was able to render a map of all the model links in just under 18 wall-clock seconds. Getting the prototype to render a map of the TAZes is a work-in-progress.
+This prototype was able to render a map of all the model links in just under 18 wall-clock seconds. 
+Getting the prototype to render a map of the TAZes is a work-in-progress, that is currently on hold.
 The __bokeh__ library can only render a "map" from a geopandas data frame that has been suitably "post-processed". That is to say, bokeh has no native understanding of the
 "geometry" column of a geopandas data frame: it can only work with raw 'x' and 'y' coordinate values. Data frame columns for 'x' and 'y' values can be created trivially
 for point geometry features. For lines, mulit-lines, polygons, and multipolygons more work is required. The python module "geopandas_2_bokeh_tenkanan.py" 
@@ -126,6 +127,11 @@ hasn't yet been shown to work for polygons or multi-polygons (e.g., the TAZes).
 ## Prototype 5
 
 This prototype is a work-in-progress exploring the use of the __plotly__ library to render maps.
+
+This prototype was able to create and render an interactive map of all the TAZes (using a slightly simplified geometry) in 125 wall-clock seconds.
+85 seconds were spent generating the interactive map (i.e., executing a plotly.express.chorolpleth() call); 
+the remaining 40 seconds were required before the map was rendered in an IPython notebook cell.
+
 
 <hr/>
 

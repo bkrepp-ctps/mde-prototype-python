@@ -46,6 +46,11 @@ gdf = geopandas.read_file(towns_geojson_file)
 # Please read the above again, at least once, as it is not made nearly as clear as it should
 # be in the plotly.express documentation.
 
+# Example 1
+#
+# This call doesn't render the map using the indicated color palette,
+# (apparently) because 'fourcolor' is an integer (numeric) field, which plotly regards
+# as requiring a continuous color scale. 
 fig = px.choropleth(gdf, geojson=towns, locations='town_id', featureidkey='properties.town_id',
                     color='fourcolor',
                     scope='usa', projection='albers usa', fitbounds='geojson')
@@ -53,3 +58,35 @@ fig.show()
 
 # Yes, we know that the map is using Albers USA projection, and the symbolization uses
 # a continuous scale. Addressing these two points are the next steps.
+
+# Example 2
+#
+# Mostly the same comments as for Example 1,
+# but also note that the dictionary keys are integers which doesn't pass muster.
+# Even if these are changed to string, it still doesn't work.
+fig = px.choropleth(gdf, geojson=towns, locations='town_id', featureidkey='properties.town_id',
+					color='fourcolor',
+					# color_discrete_map={1 : "red", 2 : "green", 3 : "blue", 3 : "goldenrod"},
+					scope='usa', projection='albers usa', fitbounds='geojson')
+
+# Example 3 - the first really "working" example
+#
+# The field 'type' is non-numeric, and so specifying a color_discrete_map works.
+fig = px.choropleth(gdf, geojson=towns, locations='town_id', featureidkey='properties.town_id',
+					color='type',
+					color_discrete_map={ "T" : "red", "C" : "green", "TC" : "blue" },
+					scope='usa', projection='albers usa', fitbounds='geojson')
+
+# Example 4
+#
+# If we want to symbolize on 'fourcolor', we'll need to create a string-valued
+# field in the data frame on which to use for discrete colormap symbolization.
+def fourcolor_to_string(row):
+	return str(row['fourcolor'])
+
+gdf['fourcolor_str'] =  gdf.apply(fourcolor_to_string, axis=1)
+fig = px.choropleth(gdf, geojson=towns, locations='town_id', featureidkey='properties.town_id',
+					color='fourcolor_str',
+					color_discrete_map={ "1" : "red", "2" : "green", "3" : "blue", "4" : "goldenrod" },
+					scope='usa', projection='albers usa', fitbounds='geojson')
+

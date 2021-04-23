@@ -114,7 +114,9 @@ kernel running the notebook crashed or hung, however, so subsequent work was pos
 
 ## Prototype #4
 
-This prototype is an attempt to use the __bokeh__ library to render maps.
+This prototype is a work-in-progress exploring the use of the __bokeh__ library to render maps. (The __bokeh__ library's ability to render _interactive_
+charts / graphs / plots, even of very large data sets is pretty well-established, and was consequently not explored in any depth at this time. 
+It uses the [__holoview__](https://holoviews.org/) library's [__datashader__](https://datashader.org/) pipline to produce rasterized images from enormous datasets)
 
 This prototype was able to render a map of all the model links in just under 18 wall-clock seconds. 
 Getting the prototype to render a map of the TAZes is a work-in-progress, that is currently on hold.
@@ -123,6 +125,8 @@ The __bokeh__ library can only render a "map" from a geopandas data frame that h
 for point geometry features. For lines, mulit-lines, polygons, and multipolygons more work is required. The python module "geopandas_2_bokeh_tenkanan.py" 
 by Hennrikki Tenkanen, which has been copied into this repository seems to "do the job" correctly for lines / multi-lines (e.g., the model links). It, however, 
 hasn't yet been shown to work for polygons or multi-polygons (e.g., the TAZes).
+
+Note: 
 
 ## Prototype 5
 

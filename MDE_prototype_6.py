@@ -81,7 +81,7 @@ gdf.hvplot(c='state', hover_cols=['taz', 'town', 'state', 'taz_type'], clabel='S
 
 
 ###############################################################################
-# This is the model for generating bar charts.
+# ***** This is the model for generating bar charts.
 
 data_tuples = list(zip(names, values))
 mydf = pd.DataFrame(data_tuples, columns=['Mode', 'Trips'])
@@ -182,6 +182,7 @@ if len(fc_names) != len(total_flow_by_fc):
 	print(s)
 	s = '	 Length of total_flow_by_fc' + str(len(total_flow_by_fc))
 	print(s)
+# end_if
 
 # Do the actual pruning
 for (x,y) in zip(fc_names, total_flow_by_fc):
@@ -196,15 +197,9 @@ scaled_values = []
 for value in pruned_total_flow_by_fc:
 	scaled_values.append(value / 10e6)
 # end_for
-
-# plt.title('Link VMT by Functional Class')
-# plt.xlabel('Functional Class')
-# plt.ylabel('Link VMT in 10^7 Miles')
-# plt.bar(pruned_fc_names, scaled_values)
-# The following line is not needed in the IPython Notebook environment
-# plt.show()
-#
-# *** TBD: Plot using hvplot
+data_tuples2 = list(zip(pruned_fc_names, scaled_values))
+mydf2 = pd.DataFrame(data_tuples2, columns=['Functional Class', 'Link VMT'])
+mydf2.hvplot.bar(x = 'Functional Class', y = 'Link VMT')
 
 
 

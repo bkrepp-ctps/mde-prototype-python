@@ -50,6 +50,28 @@ countries.hvplot(geo=True)
 countries.hvplot.polygons(geo=True, c='pop_est', hover_cols='all')
 countries.hvplot.polygons(geo=True, c=countries.pop_est/countries.area, clabel='pop density')
 
+# Now some real polygon data - the TAZ shapefile 
+# (5) Do some (very) simple mapping
+
+base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
+taz_shpfile = 'candidate_CTPS_TAZ_STATE_2019.shp'
+fn = base + taz_shpfile
+gdf = gpd.read_file(fn)
+gdf.set_index("id")
+# (5.0) Generate a map of the TAZes, using a single color symbology
+gdf.hvplot()
+# (5.1) Generate a map of the TAZes, symbolized by state, 
+#       and with a tooltip that displays all columns of data
+gdf.hvplot(c='state', hover_cols='all')
+
+# The following will also work, but is not needed
+# because hvplot will figure out the type of the underlyting data
+gdf.hvplot.polygons(c='state', hover_cols='all')
+
+# (5.1.1) Generate a map of the TAZes, symbolized by state,  
+#         but with a legend label, and a tooltip that displays
+#         a subset of the column (i.e., attributes)
+gdf.hvplot(c='state', hover_cols=['taz', 'town', 'state', 'taz_type'], clabel='State')
 
 
 ###############################################################################

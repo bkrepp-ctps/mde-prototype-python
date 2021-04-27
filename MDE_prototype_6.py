@@ -227,19 +227,18 @@ gdf.hvplot.polygons(c='state', hover_cols='all')
 gdf.hvplot(c='state', hover_cols=['taz', 'town', 'state', 'taz_type'], clabel='State')
 
 
-# (5.2) Generate a map of ALL the links, symbolized by functional class
+# (5.2) [Attempt to] generate a map of ALL the links, symbolized by functional class
 links_shpfile = 'Statewide_Links_2018_BK_EPSG26986.shp'
 fn2 = base + links_shpfile
-gdf2 = geopandas.read_file(fn2)
-gdf2.set_index("ID")
-# gdf2.plot("SCEN_00_FU", figsize=(10.0,8.0), legend=True)
-# The following line is not needed in the IPython Notebook environment
-# plt.show()
+gdf2 = gpd.read_file(fn2)
+# The following call did *NOT* return (but the browser didn't crash either):
+# gdf2.hvplot()
 #
-# *** TBD: Plot using hvplot
 
 # (5.3) Generate a map of all links with a "reasonable" functional class
 real_roads = gdf2[gdf2["SCEN_00_FU"] < 10]
+# *** RESUME HERE:
+#
 # real_roads.plot(column="SCEN_00_FU", categorical=True, legend=True, figsize=(10.0,8.0))
 # The following line is not needed in the IPython Notebook environment
 # plt.show()
@@ -277,9 +276,10 @@ def classify_flow(flow):
 # (5.5) Generate a map of 6-way classifcation of flow by link
 real_roads_joined2 = real_roads_joined.assign(flow_class=0)
 real_roads_joined2['flow_class'] = real_roads_joined2.apply(lambda row: classify_flow(row['Tot_Flow']), axis=1)
-# real_roads_joined2.plot(column="flow_class", categorical=True, legend=True, figsize=(10.0,8.0))
+# The following call gets an error regarding specification of the 'categorical' option.
+# The visualization isn't rendered, but the browser doesn't crash.
 #
-# *** TBD: Plot using hvplot
+# real_roads_joined2.hvplot(column="flow_class", categorical=True, legend=True, figsize=(10.0,8.0))
 
 # (5.6) Generate a map of the geometrically "simplified" TAZes, symbolized by state,
 #       and with a tooltip that displays all columns of data

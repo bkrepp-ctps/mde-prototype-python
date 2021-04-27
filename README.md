@@ -5,8 +5,9 @@ The principal difference among the various prototypes is the library used to (at
 1. Prototype #1 uses __matplotlib__
 2. Prototype #2 uses __folium__
 3. Prototype #3 uses __keplergl__
-4. Prototype #4 is a work-in-progress to use __bokeh__
-5. Prototype #5 is a work-in-progress to use __plotly.express__
+4. Prototype #4 is a work-in-progress using __bokeh__
+5. Prototype #5 is a work-in-progress using __plotly.express__
+6. Prototype #6 is a work-in-progress using __hvplot__
 
 ## Requirements and Dependencies
 
@@ -82,6 +83,12 @@ Using the "baseline" environment as a starting point, use __python -m pip__ to i
 
 Using the "baseline" environment as a starting point, use __python -m pip__ to install the __plotly__ library.
 
+### Environment for Prototype #6
+
+Using the "baseline" environment as a starting point, use __Anaconda Navigator__ to install the __bokeh__,
+__hvplot__, __cartopy__, __geoveiews__, and __xarray__ libraries. (The __hvplot__ library depends upon
+the __bokeh__ library.)
+
 ## Additional Background Information
 
 Installing the __openmatrix__ package will auto-install the __tables__ (a.k.a. PyTables) library. 
@@ -119,23 +126,29 @@ charts / graphs / plots, even of very large data sets is pretty well-established
 It uses the [__holoview__](https://holoviews.org/) library's [__datashader__](https://datashader.org/) pipline to produce rasterized images from enormous datasets)
 
 This prototype was able to render a map of all the model links in just under 18 wall-clock seconds. 
-Getting the prototype to render a map of the TAZes is a work-in-progress, that is currently on hold.
-The __bokeh__ library can only render a "map" from a geopandas data frame that has been suitably "post-processed". That is to say, bokeh has no native understanding of the
-"geometry" column of a geopandas data frame: it can only work with raw 'x' and 'y' coordinate values. Data frame columns for 'x' and 'y' values can be created trivially
-for point geometry features. For lines, mulit-lines, polygons, and multipolygons more work is required. The python module "geopandas_2_bokeh_tenkanan.py" 
-by Hennrikki Tenkanen, which has been copied into this repository seems to "do the job" correctly for lines / multi-lines (e.g., the model links). It, however, 
-hasn't yet been shown to work for polygons or multi-polygons (e.g., the TAZes).
 
-Note: 
+Getting the prototype to render a map of the TAZes is a work-in-progress, that is currently on hold.
+The __bokeh__ library by itself can only render a "map" from a geopandas data frame that has been suitably "post-processed". 
+That is to say, bokeh has no native understanding of the "geometry" column of a geopandas data frame: it can only work with raw 'x' and 'y' coordinate values. 
+Data frame columns for 'x' and 'y' values can be created triviallyfor point geometry features. For lines, mulit-lines, polygons, and multipolygons more work is required. 
+The python module "geopandas_2_bokeh_tenkanan.py"  by Hennrikki Tenkanen, which has been copied into this repository seems to "do the job" correctly 
+for lines / multi-lines (e.g., the model links). It, however, hasn't yet been shown to work for polygons or multi-polygons (e.g., the TAZes).
+(But see below, under __Prototype 6__ for a prototype that uses the __hvplot__ library "on top of" __bokeh__.)
 
 ## Prototype 5
 
 This prototype is a work-in-progress exploring the use of the __plotly__ library to render maps.
 
-This prototype was able to create and render an interactive map of all the TAZes (using a slightly simplified geometry) in 125 wall-clock seconds.
+This prototype was able to create and render an _interactive_ map of all the TAZes (using a slightly simplified geometry) in 125 wall-clock seconds.
 85 seconds were spent generating the interactive map (i.e., executing a plotly.express.chorolpleth() call); 
 the remaining 40 seconds were required before the map was rendered in an IPython notebook cell.
 
+## Prototype 6
+
+This prototype is a work-in-progress exploring the use of the __hvplot__ library to render maps and charts.
+(It currently only renders maps using __hvplot__; other charts are currently rendered using __matplotlib__.
+It will be extended to use __hvplot__ to render "vanilla" charts as well in the very near future.)
+This prototype was able to create and render an _interactive_ map of all the TAZes in just under 20 wall-clock seconds.
 
 <hr/>
 

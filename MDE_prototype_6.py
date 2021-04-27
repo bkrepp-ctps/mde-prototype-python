@@ -50,6 +50,10 @@ countries.hvplot(geo=True)
 countries.hvplot.polygons(geo=True, c='pop_est', hover_cols='all')
 countries.hvplot.polygons(geo=True, c=countries.pop_est/countries.area, clabel='pop density')
 
+###############################################################################
+# The following code has been copied to the appropriate place below.
+# It is retained here only for the time being during development.
+#
 # Now some real polygon data - the TAZ shapefile 
 # (5) Do some (very) simple mapping
 
@@ -60,6 +64,8 @@ gdf = gpd.read_file(fn)
 gdf.set_index("id")
 # (5.0) Generate a map of the TAZes, using a single color symbology
 gdf.hvplot()
+
+
 # (5.1) Generate a map of the TAZes, symbolized by state, 
 #       and with a tooltip that displays all columns of data
 gdf.hvplot(c='state', hover_cols='all')
@@ -75,9 +81,11 @@ gdf.hvplot(c='state', hover_cols=['taz', 'town', 'state', 'taz_type'], clabel='S
 
 
 ###############################################################################
+# This is the model for generating bar charts.
 
-
-
+data_tuples = list(zip(names, values))
+mydf = pd.DataFrame(data_tuples, columns=['Mode', 'Trips'])
+mydf.hvplot.bar(x = 'Mode', y = 'Trips')
 
 ###############################################################################
 # Here, we begin working with sample model data.
@@ -135,13 +143,11 @@ values = trip_length_by_mode.values()
 scaled_values = []
 for value in values:
 	scaled_values.append(value / 10e6)
-# plt.title('Trip Length Distribution by Mode')
-# plt.xlabel('Transportation Mode')
-# plt.ylabel('Trip Length in 10^6 miles')
-# plt.bar(names, scaled_values)
-# plt.show()
-#
-# *** TBD: Plot using hvplot
+# end_for
+data_tuples = list(zip(names, values))
+mydf = pd.DataFrame(data_tuples, columns=['Mode', 'Trips'])
+mydf.hvplot.bar(x = 'Mode', y = 'Trips')
+
 
 # (3) Calculate link VMT by functional class of road
 #
@@ -182,11 +188,15 @@ for (x,y) in zip(fc_names, total_flow_by_fc):
 	if x < 10:
 		pruned_fc_names.append(x)
 		pruned_total_flow_by_fc.append(y)
+    # end_if
+# end_for
 
 # (4) Generate the plot of link VMT by functional class	
 scaled_values = []
 for value in pruned_total_flow_by_fc:
 	scaled_values.append(value / 10e6)
+# end_for
+
 # plt.title('Link VMT by Functional Class')
 # plt.xlabel('Functional Class')
 # plt.ylabel('Link VMT in 10^7 Miles')
@@ -196,20 +206,31 @@ for value in pruned_total_flow_by_fc:
 #
 # *** TBD: Plot using hvplot
 
-# (5) Do some (very) simple mapping
-#
-# (5.1) Generate a map of the TAZes, symbolized by state
-base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
 
+
+# (5) Do some simple mapping
+#
+# (5.0) Generate a map of the TAZes, using a single color symbology
+base = r'C:/Users/ben_k/work_stuff/tdm/datastore/reference_data/'
 taz_shpfile = 'candidate_CTPS_TAZ_STATE_2019.shp'
 fn = base + taz_shpfile
 gdf = geopandas.read_file(fn)
 gdf.set_index("id")
-# gdf.plot("state", figsize=(10.0,8.0), legend=True)
-# The following line is not needed in the IPython Notebook environment
-# plt.show()
-#
-# *** TBD: Plot using hvplot
+gdf.hvplot()
+
+# (5.1) Generate a map of the TAZes, symbolized by state,
+#       and with a tooltip that displays all columns of data
+gdf.hvplot(c='state', hover_cols='all')
+
+# The following will also work, but is not needed
+# because hvplot will figure out the type of the underlyting data
+gdf.hvplot.polygons(c='state', hover_cols='all')
+
+# (5.1.1) Generate a map of the TAZes, symbolized by state,  
+#         but with a legend label, and a tooltip that displays
+#         a subset of the column (i.e., attributes)
+gdf.hvplot(c='state', hover_cols=['taz', 'town', 'state', 'taz_type'], clabel='State')
+
 
 # (5.2) Generate a map of ALL the links, symbolized by functional class
 links_shpfile = 'Statewide_Links_2018_BK_EPSG26986.shp'
@@ -265,16 +286,13 @@ real_roads_joined2['flow_class'] = real_roads_joined2.apply(lambda row: classify
 #
 # *** TBD: Plot using hvplot
 
-# (5.6) Generate a map of the geometrically "simplified" TAZes, symbolized by state
+# (5.6) Generate a map of the geometrically "simplified" TAZes, symbolized by state,
+#       and with a tooltip that displays all columns of data
 simp_taz_shpfile = 'candidate_CTPS_TAZ_STATE_2019_simp_10m.shp'
 fn3 = base + simp_taz_shpfile
 gdf3 = geopandas.read_file(fn3)
 gdf3.set_index("id")
-# gdf3.plot("state", figsize=(10.0,8.0), legend=True)
-# The following line is not needed in the IPython Notebook environment
-# plt.show()
-#
-# *** TBD: Plot using hvplot
+gdf3.hvplot(c='state', hover_cols='all
 
 # (5.7) Generate a map of ALL the geometrically "simplified" links, symbolized by functional class
 simp_links_shpfile = 'Statewide_Links_2018_BK_EPSG26986_simp_10m.shp'
@@ -285,6 +303,8 @@ gdf4 = geopandas.read_file(fn4)
 # plt.show()
 # 
 # *** TBD: Plot using hvplot
+
+##########################################
 
 # (5.8) Generate a map of all the "simplified" links with a "reasonable" functional class
 real_roads_simp = gdf4[gdf4["SCEN_00_FU"] < 10]
